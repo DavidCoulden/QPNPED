@@ -1,0 +1,9 @@
+*.class
+*.qpe
+.classpath
+.project
+test-output
+bin
+dist
+lib
+.settings
