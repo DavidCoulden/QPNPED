@@ -1,0 +1,6 @@
+transaction pgbenchtrans 1.0 {
+    -SELECT abalance FROM pgbench_accounts WHERE aid = 5;
+	-UPDATE pgbench_tellers SET tbalance = tbalance + 1 WHERE tid = 10;
+	-UPDATE pgbench_branches SET bbalance = bbalance + 1 WHERE bid = 1;
+	-INSERT INTO pgbench_history (tid, bid, aid, delta) VALUES (10, 1, 5, 1);
+}

@@ -1,0 +1,15 @@
+transaction Trans1 0.3 {
+    statement exclusive=false runtime=0.1 table=table_a {
+        -SELECT * FROM table_a;
+    }
+    if 0.2 {
+        statement exclusive=true runtime=0.4 table=table_b {
+            -UPDATE table_b SET day = 'Monday' WHERE amount > 4;
+        }
+    }
+}
+transaction Trans2 0.7 {
+    statement exclusive=false runtime=0.25 table=table_a {
+        -SELECT day FROM table_b;
+    }
+}

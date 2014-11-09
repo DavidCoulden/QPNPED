@@ -1,0 +1,23 @@
+transaction trans1 0.3 {
+	if 0.5 {
+		if 0.2 {
+			statement exclusive=false runtime=0.1 table=A {
+				-SELECT * 
+				FROM A;
+			}
+			statement exclusive=false runtime=0.3 table=B {
+				-SELECT * FROM B
+				WHERE a.fish = '4';
+			}
+		}
+		statement exclusive=true runtime=0.3 table=B {
+			-SELECT * FROM B;
+		}
+	}
+}
+
+transaction trans2 0.5 {
+	statement exclusive=true runtime=0.2 table=B {
+		-UPDATE B SET name = 'Person';
+	}
+}

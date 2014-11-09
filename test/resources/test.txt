@@ -1,0 +1,10 @@
+transaction TransBah1 0.3 {
+	if 0.5 {
+		-SELECT * FROM city JOIN country ON city.id = country.capital
+			WHERE city.id=3;
+	}
+	-SELECT * FROM country;
+}
+transaction Snafuu 0.7 {
+	-UPDATE city SET name = 'London' WHERE id = 1;
+}

@@ -1,0 +1,51 @@
+<project name="AutoQPNPED" default="dist" basedir=".">
+	<property name="src" location="src/main"/>
+	<property name="resources" location="src/resources"/>
+	<property name="bin" location="bin"/>
+	<property name="lib" location="lib"/>
+	<property name="dist" location="dist"/>
+	<property name="jarfile" location="AutoQPNPED.jar"/>
+	<property name="main.class" value="com.dbtool.Main"/>
+	<path id="compile.classpath">
+		<fileset dir="${lib}" includes="**/*.jar"/>
+	</path>
+	<target name="init">
+		<tstamp/>
+		<mkdir dir="${bin}"/>
+	</target>
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${bin}" includeantruntime="false">
+			<classpath refid="compile.classpath"/>
+		</javac>
+		<copy todir="${bin}">
+			<fileset dir="${resources}"/>
+		</copy>
+	</target>
+	<target name="dist" depends="compile">
+		<mkdir dir="${dist}"/>
+		<mkdir dir="${dist}/lib"/>
+		<mkdir dir="${dist}/resources"/>
+		<copy todir="${dist}/lib">
+			<fileset dir="${lib}"/>
+		</copy>
+		<copy todir="${dist}/resources">
+			<fileset dir="${bin}" includes="**/*.properties"/>
+		</copy>
+		<path id="jar.classpath">
+			<fileset dir="${dist}/lib" includes="**/*.jar"/>
+			<pathelement path="${dist}/resources"/>
+		</path>
+		<manifestclasspath property="manifest.classpath"
+		                       jarfile="${dist}/AutoQPNPED.jar">
+		      <classpath refid="jar.classpath"/>
+		</manifestclasspath>
+		<jar destfile="${dist}/AutoQPNPED.jar">
+			<manifest>
+				<attribute name="Main-Class" value="${main.class}"/>
+				<attribute name="Class-Path" value="${manifest.classpath}"/>
+			</manifest>
+			<fileset dir="${bin}" excludes="*.properties"/>
+		</jar>
+	</target>
+	
+</project>
